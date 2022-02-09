@@ -1,0 +1,69 @@
+.allDialogs {
+    display: grid;
+    grid-template-areas: "name name"
+                          "cont mess";
+    grid-template-rows: 30px 1fr;
+    grid-template-columns: 1fr 5fr;
+    margin: 0;
+    padding: 0 20px 20px;
+    grid-gap: 10px 15px;
+
+}
+
+.contacts {
+    grid-area: cont;
+    /*border-right: 1px #282c34;*/
+    /*border-right-style: solid;*/
+    padding-right: 20px;
+    /*padding-top: 0px;*/
+    align-self: self-start;
+    /*border: 1px #282c34 solid;*/
+
+
+}
+.dialog a{
+    font-size: larger;
+    padding-bottom: 20px;
+    text-decoration-line: none;
+    color: darkslateblue;
+
+}
+.dialog {
+    padding-bottom: 10px;
+}
+
+.dialog a.activeLink {
+    color: gold;
+    transition: all 0.5s ease-out;
+}
+
+.contacts .active {
+    color: gold;
+}
+
+.messages {
+    grid-area: mess;
+    align-self: start;
+    /*border: 1px #282c34 solid;*/
+
+}
+.message {
+    font-size: larger;
+    padding-bottom: 10px;
+}
+
+h2 {
+    grid-area: name;
+    margin: 5px 0 0;
+    padding: 0;
+    align-self: center;
+    font-weight: normal;
+
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid gainsboro;
+}

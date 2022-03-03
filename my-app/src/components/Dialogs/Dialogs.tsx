@@ -1,15 +1,17 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import s from './Dialogs.module.css';
 import { loremIpsum } from 'react-lorem-ipsum';
 import { DialogItem } from './DialogItem/DialogItem';
-import Message, { MessagePropsType } from './Message/Message';
+import{ Message, MessagePropsType } from './Message/Message';
 import { DialogItemPropsType } from './DialogItem/DialogItem';
-import { DialogType, MessageType } from '../../redux/state';
+import { ActionsType, DialogType, MessageType } from '../../redux/state';
+import { addMessageActionCreator } from '../../redux/DialogsReducer';
 
 type DialogsType = {
   dialogs: DialogType[];
   messages: MessageType[];
+  dispatch: (action: ActionsType) => void
 }
 
 const Dialogs = (props: DialogsType) => {
@@ -26,8 +28,17 @@ const Dialogs = (props: DialogsType) => {
   };
 
   const AddNewMessage = () => {
-    return alert(NewMessage);
+    props.dispatch(addMessageActionCreator(NewMessage))
+    SetNewMessage('')
   };
+
+  const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.code === 'Enter' && NewMessage.trim() !== '') {
+      props.dispatch(addMessageActionCreator(NewMessage));
+      SetNewMessage('');
+    }
+  };
+
 
   return (
     <div className={s.allDialogs}>
@@ -40,6 +51,7 @@ const Dialogs = (props: DialogsType) => {
         <div>
           <textarea
             value={NewMessage}
+            onKeyPress={onKeyPressHandler}
             onChange={onNewMessageHandler} />
         </div>
 

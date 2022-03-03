@@ -6,10 +6,9 @@ export type MessagePropsType = {
   id: number;
 }
 
-const Message = (props: MessagePropsType) => {
+ export const Message = (props: MessagePropsType) => {
   return (
     <div className={s.message}>{props.message}</div>
   );
 };
 
-export default Message;

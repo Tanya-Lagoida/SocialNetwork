@@ -23,13 +23,16 @@
 }
 .dialog a{
     font-size: larger;
-    padding-bottom: 20px;
     text-decoration-line: none;
     color: darkslateblue;
 
 }
 .dialog {
     padding-bottom: 10px;
+}
+
+.oneDialog {
+    display: flex;
 }
 
 .dialog a.activeLink {
@@ -66,4 +69,8 @@ h2 {
     height: 60px;
     border-radius: 50%;
     border: 3px solid gainsboro;
+}
+
+.name {
+    margin: 20px 0 0 10px;
 }

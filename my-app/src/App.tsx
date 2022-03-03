@@ -6,12 +6,12 @@ import Profile from './components/Profile/Profile';
 import s from './App.module.css';
 import Dialogs from './components/Dialogs/Dialogs';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { StateType } from './redux/state';
+import { ActionsType, StateType } from './redux/state';
 import { Sidebar } from './components/Sidebar/Sidebar';
 
 type AppPropsType = {
   appState: StateType
-  addPost: (newText: string) => void
+  dispatch: (action: ActionsType) => void
   // onNewPostHandler: (newText: string) => void
 }
 
@@ -28,13 +28,14 @@ const App = (props: AppPropsType) => {
                    render={ () =>
                      <Profile
                      posts={props.appState.profilePage.posts}
-                     addPost={props.addPost}
+                     dispatch={props.dispatch.bind(props)}
                      // onNewPostHandler={props.onNewPostHandler}
                    />} />
             <Route path={'/dialogs'}
                    render={ () => <Dialogs
                      dialogs={props.appState.dialogsPage.dialogs}
-                     messages={props.appState.dialogsPage.messages}/>} />
+                     messages={props.appState.dialogsPage.messages}
+                     dispatch={props.dispatch.bind(props)}/>} />
 
 
           </div>

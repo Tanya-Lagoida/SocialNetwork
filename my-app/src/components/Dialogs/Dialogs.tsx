@@ -11,7 +11,8 @@ import { addMessageActionCreator } from '../../redux/DialogsReducer';
 type DialogsType = {
   dialogs: DialogType[];
   messages: MessageType[];
-  dispatch: (action: ActionsType) => void
+  AddNewMessageContainer: (NewMessage: string) => void
+
 }
 
 const Dialogs = (props: DialogsType) => {
@@ -28,13 +29,13 @@ const Dialogs = (props: DialogsType) => {
   };
 
   const AddNewMessage = () => {
-    props.dispatch(addMessageActionCreator(NewMessage))
+    props.AddNewMessageContainer(NewMessage)
     SetNewMessage('')
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.code === 'Enter' && NewMessage.trim() !== '') {
-      props.dispatch(addMessageActionCreator(NewMessage));
+      props.AddNewMessageContainer(NewMessage);
       SetNewMessage('');
     }
   };

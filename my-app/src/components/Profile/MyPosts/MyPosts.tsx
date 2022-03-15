@@ -1,14 +1,13 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import { ActionsType, PostType } from '../../../redux/state';
-import { addPostActionCreator } from '../../../redux/ProfileReducer';
+import { PostType } from '../../../redux/state';
 
 type MyPostsType = {
-  posts: PostType[];
-  dispatch: (action: ActionsType) => void
-  // onNewPostHandler: (newText: string) => void
+  posts: PostType[]
+  addPostAction: (NewPost: string) => void
 }
+
 
 export const MyPosts = (props: MyPostsType) => {
 
@@ -20,19 +19,15 @@ export const MyPosts = (props: MyPostsType) => {
 
   const newPostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewPost(e.currentTarget.value);
-
   };
   const addNewPost = () => {
-    debugger
-    // props.addPost(NewPost)
-    // props.dispatch({type: "ADD-POST", NewPost})
-    props.dispatch(addPostActionCreator(NewPost));
+    props.addPostAction(NewPost)
     setNewPost('')
   };
 
   const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.code === 'Enter' && NewPost.trim() !== '') {
-      props.dispatch(addPostActionCreator(NewPost));
+      props.addPostAction(NewPost)
       setNewPost('');
     }
   };
@@ -45,8 +40,8 @@ export const MyPosts = (props: MyPostsType) => {
           <textarea
             onChange={newPostHandler}
             onKeyPress={onKeyPressHandler}
-            value={NewPost}/>
-
+            value={NewPost}
+          />
         </div>
         <div>
           <button onClick={addNewPost}>Add post</button>

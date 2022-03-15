@@ -14,7 +14,6 @@ export type MessageType = {
 export type StateType = {
   profilePage: {
     posts: PostType[],
-    // messageForNewPost: string
   },
   dialogsPage: {
     dialogs: DialogType[]
@@ -41,7 +40,6 @@ export type StoreType = {
   subscribe: (observer: () => void) => void
   dispatch: (action: ActionsType) => void
 }
-
 export type AddPostAC = {
   type: 'ADD-POST',
   NewPost: string
@@ -56,9 +54,6 @@ export type ActionsType =  AddPostAC | AddMessageAC
 export const store: StoreType = {
   _state: {
     profilePage: {
-
-      // messageForNewPost: "",
-
       posts: [
         { id: 1, message: "Hi,how are you?", likesCount: 5 },
         { id: 2, message: "It is me!", likesCount: 11 },

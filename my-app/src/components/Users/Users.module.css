@@ -1,0 +1,65 @@
+.userAvatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+.ava {
+    grid-area: ava;
+    justify-self: center;
+}
+.allUser {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-areas: "ava nal"
+                         "button nal";
+    margin: 15px;
+    width: 500px;
+}
+.allButton {
+    grid-area: button;
+    justify-self: center;
+}
+.button {
+    width: 87px;
+    height: 110%;
+    background-color: plum;
+    border:none;
+    border-radius: 5px;
+
+}
+.nameAndLocation {
+    border: 2px solid lightskyblue;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "n co"
+                         "s ci";
+    width: 500px;
+    height: 60px;
+    padding: 10px 10px 10px 20px;
+    grid-area: nal;
+    margin-left: 10px;
+}
+.name {
+    grid-area: n;
+    align-self: start;
+
+}
+.status {
+    grid-area: s;
+    margin-bottom: 0;
+    align-self: end;
+}
+.country {
+    grid-area: co;
+    align-self: center;
+    padding-bottom: 0;
+    margin: 0;
+}
+.city {
+    grid-area: ci;
+    align-self: center;
+    padding-top: 0;
+    margin: 0;
+}

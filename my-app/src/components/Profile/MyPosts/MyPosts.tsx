@@ -1,15 +1,9 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import { PostType } from '../../../redux/state';
+import { MyPostsPropsType } from './MyPostsContainer';
 
-type MyPostsType = {
-  posts: PostType[]
-  addPostAction: (NewPost: string) => void
-}
-
-
-export const MyPosts = (props: MyPostsType) => {
+export const MyPosts = (props: MyPostsPropsType) => {
 
   let postsElements = props.posts.map((p: { id: number; message: string; likesCount: number; }) =>
     <Post id={p.id} message={p.message} likesCount={p.likesCount}/>);

@@ -1,6 +1,7 @@
 import { profileReducer } from './ProfileReducer';
 import { dialogsReducer } from './DialogsReducer';
 import { sidebarReducer } from './SidebarReducer';
+import { usersReducer, UserType } from './UsersReducer';
 
 export type SidebarType = {
   id: number
@@ -21,6 +22,9 @@ export type StateType = {
   },
   sidebarPage: {
     sidebarItems: SidebarType[]
+  },
+  usersPage: {
+    users: UserType[]
   }
 }
 export type PostType = {
@@ -48,8 +52,20 @@ export type AddMessageAC = {
   type: 'ADD-MESSAGE',
   NewMessage: string
 }
+export type FollowAC = {
+  type: 'FOLLOW',
+  userId: number
+}
+export type UnfollowAC = {
+  type: 'UNFOLLOW',
+  userId: number
+}
+export type SetUsersAC = {
+  type: 'SET_USERS',
+  users: Array<UserType>
+}
 
-export type ActionsType =  AddPostAC | AddMessageAC
+export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnfollowAC | SetUsersAC
 
 export const store: StoreType = {
   _state: {
@@ -117,6 +133,34 @@ export const store: StoreType = {
           avatar: 'https://i.pinimg.com/236x/fc/45/bc/fc45bc384dc480701e1ea4a1fb8966eb.jpg'
         }
       ]
+    },
+    usersPage: {
+      users: [
+        {id: 1,
+          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
+          followed: true,
+          name: 'Tanya',
+          status: 'Hello',
+          location: {country: 'Belarus', city: 'Minsk'} },
+        {id: 2,
+          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
+          followed: false,
+          name: 'Sergej',
+          status: 'I am boss',
+          location: {country: 'Ukraine', city: 'Kiev'} },
+        {id: 3,
+          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
+          followed: false,
+          name: 'Aleksej',
+          status: 'Hello',
+          location: {country: 'Ukraine', city: 'Odessa'} },
+        {id: 4,
+          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
+          followed: true,
+          name: 'Margo',
+          status: 'I am pretty',
+          location: {country: 'Ukraine', city: 'Kiev'} }
+      ]
     }
 
   },
@@ -133,6 +177,7 @@ export const store: StoreType = {
     this._state.profilePage = profileReducer(this._state.profilePage, action);
     this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
     this._state.sidebarPage = sidebarReducer(this._state.sidebarPage, action);
+    this._state.usersPage = usersReducer(this._state.usersPage, action)
 
     // this.rerenderEntireTree()
   }

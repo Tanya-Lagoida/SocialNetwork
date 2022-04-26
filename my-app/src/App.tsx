@@ -8,11 +8,11 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { StateType } from './redux/state';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
+import { Users } from './components/Users/Users';
+import { UsersContainer } from './components/Users/UsersContainer';
 
 type AppPropsType = {
   appState: StateType
-  // dispatch: (action: ActionsType) => void
-  // store: StoreType
 }
 
 const App = (props: AppPropsType) => {
@@ -25,10 +25,11 @@ const App = (props: AppPropsType) => {
           <Sidebar sidebarItems={props.appState.sidebarPage.sidebarItems}/>
           <div className={s.appWrapperContent}>
             <Route path={'/profile'}
-                   render={() =>
-                     <Profile />}/>
+                   render={() => <Profile />}/>
             <Route path={'/dialogs'}
                    render={() => <DialogsContainer />}/>
+            <Route path={'/users'}
+                   render={() => <UsersContainer />}/>
           </div>
         </div>
       </div>

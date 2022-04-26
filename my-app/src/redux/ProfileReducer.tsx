@@ -5,11 +5,12 @@ const initialState = {
     { id: 1, message: "Hi,how are you?", likesCount: 5 },
     { id: 2, message: "It is me!", likesCount: 11 },
     { id: 3, message: "It is cool!", likesCount: 16 }
-  ]
+  ] as Array<PostType>
 };
 
-export const profileReducer = (state: {posts: PostType[]} = initialState, action: ActionsType): {posts: PostType[]} => {
-  debugger
+export type InitialStateType = typeof initialState
+
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case  'ADD-POST':
       const newPost: PostType = {
@@ -17,8 +18,11 @@ export const profileReducer = (state: {posts: PostType[]} = initialState, action
         message: action.NewPost,
         likesCount: 0
       };
-      state.posts.push(newPost);
-      return state;
+
+      return {
+        ...state,
+        posts: [...state.posts, newPost]
+      };
     default:
       return state;
   }

@@ -7,15 +7,9 @@ import{ Message, MessagePropsType } from './Message/Message';
 import { DialogItemPropsType } from './DialogItem/DialogItem';
 import { ActionsType, DialogType, MessageType } from '../../redux/state';
 import { addMessageActionCreator } from '../../redux/DialogsReducer';
+import { DialogsPropsType } from './DialogsContainer';
 
-type DialogsType = {
-  dialogs: DialogType[];
-  messages: MessageType[];
-  AddNewMessageContainer: (NewMessage: string) => void
-
-}
-
-const Dialogs = (props: DialogsType) => {
+const Dialogs = (props: DialogsPropsType) => {
 
   let dialogsElements = props.dialogs.map((d: { name: string; id: number; avatar: string }) =>
     <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>);

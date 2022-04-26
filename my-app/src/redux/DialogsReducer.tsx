@@ -31,23 +31,23 @@ const initialState = {
       name: "Senya",
       avatar: 'https://i.pinimg.com/236x/12/85/36/128536679d8ce50ebafeeb6dbc564829.jpg'
     }
-  ],
+  ] as Array<DialogType>,
   messages: [
     { id: 1, message: "Hi! How are you?" },
     { id: 2, message: "Hi! How are you?" },
     { id: 3, message: "Hi! How are you?" }
-  ]
+  ] as Array<MessageType>
 };
 
-export const dialogsReducer = (state: {dialogs: DialogType[], messages: MessageType[]} = initialState, action: ActionsType): {dialogs: DialogType[], messages: MessageType[]} => {
+export type InitialStateType = typeof initialState
+
+export const dialogsReducer = (state: InitialStateType  = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case 'ADD-MESSAGE':
-      const newMessage: MessageType = {
-        id: 4,
-        message: action.NewMessage
+      return {
+        ...state,
+        messages: [...state.messages, { id: 4, message: action.NewMessage}]
       };
-      state.messages.push(newMessage);
-      return state;
     default:
       return state;
   }

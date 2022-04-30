@@ -14,8 +14,10 @@
     grid-area: c;
     background-color: beige;
 }
-
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Pattaya&display=swap');
 textarea {
-    font-family: "Comic Sans MS";
-    font-size: larger;
+    font-family: 'Cookie', cursive;
+    font-family: 'Pattaya', sans-serif;
+    font-size: 30px;
+    font-weight: normal;
 }

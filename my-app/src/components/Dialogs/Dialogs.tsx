@@ -27,12 +27,12 @@ const Dialogs = (props: DialogsPropsType) => {
     SetNewMessage('')
   };
 
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.code === 'Enter' && NewMessage.trim() !== '') {
-      props.AddNewMessageContainer(NewMessage);
-      SetNewMessage('');
-    }
-  };
+  // const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  //   if (e.code === 'Enter' && NewMessage.trim() !== '') {
+  //     props.AddNewMessageContainer(NewMessage);
+  //     SetNewMessage('');
+  //   }
+  // };
 
 
   return (
@@ -46,7 +46,7 @@ const Dialogs = (props: DialogsPropsType) => {
         <div>
           <textarea
             value={NewMessage}
-            onKeyPress={onKeyPressHandler}
+            // onKeyPress={onKeyPressHandler}
             onChange={onNewMessageHandler} />
         </div>
 

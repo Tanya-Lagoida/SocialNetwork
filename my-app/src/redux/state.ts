@@ -135,32 +135,7 @@ export const store: StoreType = {
       ]
     },
     usersPage: {
-      users: [
-        {id: 1,
-          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
-          followed: true,
-          name: 'Tanya',
-          status: 'Hello',
-          location: {country: 'Belarus', city: 'Minsk'} },
-        {id: 2,
-          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
-          followed: false,
-          name: 'Sergej',
-          status: 'I am boss',
-          location: {country: 'Ukraine', city: 'Kiev'} },
-        {id: 3,
-          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
-          followed: false,
-          name: 'Aleksej',
-          status: 'Hello',
-          location: {country: 'Ukraine', city: 'Odessa'} },
-        {id: 4,
-          photoUrl: 'https://shapka-youtube.ru/wp-content/uploads/2020/12/girls-ava1.jpg',
-          followed: true,
-          name: 'Margo',
-          status: 'I am pretty',
-          location: {country: 'Ukraine', city: 'Kiev'} }
-      ]
+      users: [] as Array<UserType>
     }
 
   },

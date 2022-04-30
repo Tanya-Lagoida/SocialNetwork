@@ -19,12 +19,12 @@ export const MyPosts = (props: MyPostsPropsType) => {
     setNewPost('')
   };
 
-  const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.code === 'Enter' && NewPost.trim() !== '') {
-      props.addPostAction(NewPost)
-      setNewPost('');
-    }
-  };
+  // const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  //   if (e.code === 'Enter' && NewPost.trim() !== '') {
+  //     props.addPostAction(NewPost)
+  //     setNewPost('');
+  //   }
+  // };
 
   return (
     <div className={s.postsBlock}>
@@ -33,7 +33,6 @@ export const MyPosts = (props: MyPostsPropsType) => {
         <div>
           <textarea
             onChange={newPostHandler}
-            onKeyPress={onKeyPressHandler}
             value={NewPost}
           />
         </div>

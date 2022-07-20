@@ -24,7 +24,10 @@ export type StateType = {
     sidebarItems: SidebarType[]
   },
   usersPage: {
-    users: UserType[]
+    users: UserType[],
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number,
   }
 }
 export type PostType = {
@@ -56,7 +59,7 @@ export type FollowAC = {
   type: 'FOLLOW',
   userId: number
 }
-export type UnfollowAC = {
+export type UnFollowAC = {
   type: 'UNFOLLOW',
   userId: number
 }
@@ -64,8 +67,17 @@ export type SetUsersAC = {
   type: 'SET_USERS',
   users: Array<UserType>
 }
+export type SetCurrentPageAC = {
+  type: 'SET_CURRENT_PAGE',
+  currentPage: number
+}
+export type SetTotalUsersCountAC = {
+  type: 'SET_TOTAL_COUNT',
+  count: number
+}
 
-export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnfollowAC | SetUsersAC
+
+export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnFollowAC | SetUsersAC | SetCurrentPageAC | SetTotalUsersCountAC
 
 export const store: StoreType = {
   _state: {
@@ -135,7 +147,11 @@ export const store: StoreType = {
       ]
     },
     usersPage: {
-      users: [] as Array<UserType>
+      users: [] as Array<UserType>,
+      pageSize: 5,
+      totalUsersCount: 20,
+      currentPage: 1,
+
     }
 
   },

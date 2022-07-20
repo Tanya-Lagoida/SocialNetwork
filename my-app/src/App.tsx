@@ -8,7 +8,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { StateType } from './redux/state';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
-import { Users } from './components/Users/Users';
 import { UsersContainer } from './components/Users/UsersContainer';
 
 type AppPropsType = {

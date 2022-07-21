@@ -10,8 +10,6 @@ import { Provider } from 'react-redux';
   ReactDOM.render(
     <React.StrictMode>
       <Provider store ={store}>
-        {/*<App store={store} appState={store.getState()}*/}
-        {/*     dispatch={store.dispatch.bind(store)}/>*/}
              <App appState={store.getState()} />
       </Provider>
     </React.StrictMode>,

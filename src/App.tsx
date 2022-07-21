@@ -10,29 +10,24 @@ import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 
-type AppPropsType = {
-  appState: StateType
-}
+// type AppPropsType = {
+//   appState: StateType
+// }
 
-const App = (props: AppPropsType) => {
+const App = () => {
   return (
-    <BrowserRouter>
       <div>
         <div className={s.appWrapper}>
           <Header/>
           <Navbar/>
-          <Sidebar sidebarItems={props.appState.sidebarPage.sidebarItems}/>
+          {/*<Sidebar sidebarItems={props.appState.sidebarPage.sidebarItems}/>*/}
           <div className={s.appWrapperContent}>
-            <Route path='/profile/:userId?'
-                   render={() => <ProfileContainer />}/>
-            <Route path='/dialogs'
-                   render={() => <DialogsContainer />}/>
-            <Route path='/users'
-                   render={() => <UsersContainer />}/>
+            <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
+            <Route path='/dialogs' render={() => <DialogsContainer />}/>
+            <Route path='/users' render={() => <UsersContainer />}/>
           </div>
         </div>
       </div>
-    </BrowserRouter>
   );
 };
 

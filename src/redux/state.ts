@@ -39,13 +39,7 @@ export type DialogType = {
   name: string
   avatar: string
 }
-export type StoreType = {
-  _state: StateType
-  getState: () => StateType
-  rerenderEntireTree: () => void
-  subscribe: (observer: () => void) => void
-  dispatch: (action: ActionsType) => void
-}
+
 export type AddPostAC = {
   type: 'ADD-POST',
   NewPost: string

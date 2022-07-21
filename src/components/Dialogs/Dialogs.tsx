@@ -1,12 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import s from './Dialogs.module.css';
-import { loremIpsum } from 'react-lorem-ipsum';
 import { DialogItem } from './DialogItem/DialogItem';
 import{ Message, MessagePropsType } from './Message/Message';
-import { DialogItemPropsType } from './DialogItem/DialogItem';
-import { ActionsType, DialogType, MessageType } from '../../redux/state';
-import { addMessageActionCreator } from '../../redux/DialogsReducer';
 import { DialogsPropsType } from './DialogsContainer';
 
 const Dialogs = (props: DialogsPropsType) => {

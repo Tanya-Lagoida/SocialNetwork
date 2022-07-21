@@ -26,8 +26,7 @@ export const Users = (props: UsersPropsType) => {
       {pages.map(p => {
         return <span className={props.currentPage === p ? s.selectedPage : undefined}
                      onClick={(event) => {
-                       props.onPageChanged(p);
-                     }}> {p} </span>;
+                       props.onPageChanged(p) }}> {p} </span>
       })}
     </div>
 
@@ -64,6 +63,6 @@ export const Users = (props: UsersPropsType) => {
         </div>
       </div>)
     }
-  </div>;
+  </div>
 
-};
+}

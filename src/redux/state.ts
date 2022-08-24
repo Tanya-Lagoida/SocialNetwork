@@ -39,6 +39,12 @@ export type DialogType = {
   name: string
   avatar: string
 }
+export type AuthType = {
+  userId: number | null
+  email: string | null
+  login: string | null
+  isAuth: boolean
+}
 
 export type AddPostAC = {
   type: 'ADD-POST',
@@ -76,9 +82,15 @@ export type SetUserProfileAC = {
   type: 'SET_USER_PROFILE',
   profile: any
 }
+export type SetUserDataAC = {
+  type: 'SET_USER_DATA',
+  data: {
+    userId: number | null, email: string | null, login: string | null
+  }
+}
 
 
-export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnFollowAC | SetUsersAC | SetCurrentPageAC | SetTotalUsersCountAC | ToggleIsFetchingAC | SetUserProfileAC
+export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnFollowAC | SetUsersAC | SetCurrentPageAC | SetTotalUsersCountAC | ToggleIsFetchingAC | SetUserProfileAC | SetUserDataAC
 
 
 

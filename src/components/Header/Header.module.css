@@ -9,6 +9,18 @@
     margin-left: 10px;
 
 }
+.loginBlock {
+    float: right;
+    margin: 20px 40px;
+    color: darkslateblue;
+    font-weight: bolder;
+}
+.loginBlock a {
+    color: darkslateblue;
+    text-decoration: none;
+    font-weight: bolder;
+
+}
 
 
 

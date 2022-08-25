@@ -89,8 +89,13 @@ export type SetUserDataAC = {
   }
 }
 
+export type FollowingInProgressAC = {
+  type: 'FOLLOWING_IN_PROGRESS',
+  isFetching: boolean,
+  userId: number
+}
 
-export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnFollowAC | SetUsersAC | SetCurrentPageAC | SetTotalUsersCountAC | ToggleIsFetchingAC | SetUserProfileAC | SetUserDataAC
+export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnFollowAC | SetUsersAC | SetCurrentPageAC | SetTotalUsersCountAC | ToggleIsFetchingAC | SetUserProfileAC | SetUserDataAC | FollowingInProgressAC
 
 
 

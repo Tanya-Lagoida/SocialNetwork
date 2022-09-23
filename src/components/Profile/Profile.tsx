@@ -4,6 +4,7 @@ import ProfileInfo  from './ProfileInfo/ProfileInfo';
 
 export type ProfilePropsType = {
   profile: any
+  setUserProfileThunk: (userId: string) => void
 }
 
 const Profile = (props:ProfilePropsType) => {

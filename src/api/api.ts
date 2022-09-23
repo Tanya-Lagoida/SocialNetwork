@@ -18,13 +18,19 @@ export const authUsers = () => {
   return instance.get(`auth/me`)
 }
 
-export const deleteUsers = (id: number) => {
+export const unFollow = (id: number) => {
   return instance.delete(`follow/${id}`)
 }
 
-export const postUsers = (id: number) => {
+export const follow = (id: number) => {
   return instance.post(`follow/${id}`)
 }
+
+export const setUserProfile = (userId: string) => {
+  return instance.get(`profile/` + userId)
+}
+
+
 
 
 

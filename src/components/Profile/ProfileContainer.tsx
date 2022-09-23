@@ -1,12 +1,10 @@
 import React from 'react';
 import Profile from './Profile';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { setUserProfile } from '../../redux/ProfileReducer';
+import {  setUserProfileThunk } from '../../redux/ProfileReducer';
 import { AppStateType } from '../../redux/ReduxStore';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-// import { ProfileType } from './ProfileInfo/ProfileInfo';
 
 type PathParamsType = {
   userId: string,
@@ -20,35 +18,40 @@ class ProfileContainer extends React.Component<RouteComponentProps<PathParamsTyp
     if (!userId) {
       userId = '2';
     }
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-      .then(response => {
-        this.props.setUserProfile(response.data);
-      });
+    this.props.setUserProfileThunk(userId)
   }
 
   render() {
+    if (!this.props.isAuth) return <Redirect to='/login' />
+
     return (
-      <Profile {...this.props} profile={this.props.profile}/>
+      <Profile
+        {...this.props}
+        profile={this.props.profile}
+        setUserProfileThunk={this.props.setUserProfileThunk}
+      />
     );
   }
 };
 
 const MapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
   };
 };
 
 type MapStatePropsType = {
   profile: any
+  isAuth: boolean
 }
 
 type MapDispatchPropsType = {
-  setUserProfile: (profile: any) => void
+  setUserProfileThunk: (userId: string) => void
 }
 
 export type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 const WithUrlDataContainerComponent = withRouter(ProfileContainer);
 
-export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(MapStateToProps, { setUserProfile })(WithUrlDataContainerComponent);
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(MapStateToProps, { setUserProfileThunk })(WithUrlDataContainerComponent);

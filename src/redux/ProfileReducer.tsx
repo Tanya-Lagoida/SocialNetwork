@@ -1,4 +1,5 @@
 import { ActionsType, AddPostAC, PostType, SetUserProfileAC } from './state';
+import { setUserProfile } from '../api/api';
 
 const initialState = {
   posts: [
@@ -34,17 +35,15 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
   }
 };
 
-export const addPostActionCreator = (NewPost: string): AddPostAC => {
-  return {
-    type: 'ADD-POST',
-    NewPost: NewPost
-  }
+export const addPostActionCreator = (NewPost: string): AddPostAC => ({ type: 'ADD-POST', NewPost })
+export const setUserProfileAC = (profile: any): SetUserProfileAC => ({ type: 'SET_USER_PROFILE', profile })
+
+export const setUserProfileThunk = (userId: string) => (dispatch: any) => {
+  setUserProfile(userId)
+    .then(response => {
+      dispatch(setUserProfileAC(response.data))
+    });
 }
-export const setUserProfile = (profile: any): SetUserProfileAC => {
-  return {
-    type: 'SET_USER_PROFILE',
-    profile
-  }
-}
+
 
 

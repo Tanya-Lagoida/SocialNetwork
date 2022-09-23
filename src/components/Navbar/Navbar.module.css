@@ -1,6 +1,6 @@
 .nav {
     grid-area: n;
-    background-color: lightskyblue;
+    background-color: powderblue;
     padding: 15px;
     margin-bottom: 0;
     padding-bottom: 0;
@@ -14,7 +14,7 @@
 
 .item a {
     text-decoration-line: none;
-    color: white;
+    color: darkslateblue;
     font-size: larger;
 }
 

@@ -3,7 +3,6 @@ import s from './Users.module.css';
 import userPhoto from '../../images/images.png';
 import { UserType } from '../../redux/UsersReducer';
 import { NavLink } from 'react-router-dom';
-import { deleteUsers, postUsers } from '../../api/api';
 
 type UsersPropsType = {
   totalUsersCount: number,
@@ -11,10 +10,13 @@ type UsersPropsType = {
   currentPage: number,
   onPageChanged: (pageNumber: number) => void,
   users: Array<UserType>,
-  follow: (userId: number) => void,
-  unFollow: (userId: number) => void,
-  toggleFollowingInProgress: (isFetching: boolean, id: number) => void,
+  followSuccess: (userId: number) => void,
+  unFollowSuccess: (userId: number) => void,
   followingInProgress: Array<number>,
+  followThunk(id: number): void,
+  unFollowThunk(id: number): void,
+  getUsersThunk: (currentPage: number, pageSize: number) => void,
+  onPageChangedThunk: (pageNumber: number, pageSize: number) => void,
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -47,33 +49,13 @@ export const Users = (props: UsersPropsType) => {
             <button
               disabled={props.followingInProgress.some(id => id === u.id)}
               className={s.button}
-              onClick={() => {
-                props.toggleFollowingInProgress(true, u.id)
-                deleteUsers(u.id)
-                  .then(response => {
-                    if (response.data.resultCode === 0) {
-                      props.unFollow(u.id);
-                    }
-                    props.toggleFollowingInProgress(false, u.id)
-                  })
-
-              }}>UNFOLLOW
+              onClick={() => { props.unFollowThunk(u.id) }}>UNFOLLOW
             </button>
             :
             <button
               disabled={props.followingInProgress.some(id => id === u.id)}
               className={s.button}
-              onClick={() => {
-                props.toggleFollowingInProgress(true, u.id)
-                postUsers(u.id)
-                  .then(response => {
-                    if (response.data.resultCode === 0) {
-                      props.follow(u.id);
-                    }
-                    props.toggleFollowingInProgress(false, u.id)
-                  })
-
-              }}>FOLLOW
+              onClick={() => { props.followThunk(u.id) }}>FOLLOW
             </button>
           }
         </div>

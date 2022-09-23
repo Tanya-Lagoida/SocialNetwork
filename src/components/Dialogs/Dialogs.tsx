@@ -1,5 +1,5 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink, Redirect, Route } from 'react-router-dom';
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import{ Message, MessagePropsType } from './Message/Message';
@@ -29,6 +29,8 @@ const Dialogs = (props: DialogsPropsType) => {
   //     SetNewMessage('');
   //   }
   // };
+
+  if (!props.isAuth) return <Redirect to='/login'/>
 
 
   return (

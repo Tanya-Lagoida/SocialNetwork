@@ -3,6 +3,8 @@ import s from './ProfileInfo.module.css';
 import { Preloader } from '../../common/Preloader';
 import yes from '../../../images/yes.png';
 import no from '../../../images/no.png';
+import userPhoto from '../../../images/images.png';
+
 
 // export type ProfileType = {
 //   photos: {large: string}
@@ -26,7 +28,10 @@ const ProfileInfo = (props: ProfileInfoType) => {
           src='https://www.meme-arsenal.com/memes/99120c6e36030e6bae1a5b1aaa70a94b.jpg'/>
       </div>
       <div>
-        <img className={s.avaImage} src={props.profile.photos.large}/>
+        {
+          <img className={s.avaImage} src={props.profile.photos.large != null ? props.profile.photos.large : userPhoto } alt="" />
+        }
+
         <div>{props.profile.aboutMe}</div>
         <div>{props.profile.fullName}</div>
         <div>lookingForAJob {(props.profile.lookingForAJob)
@@ -35,9 +40,6 @@ const ProfileInfo = (props: ProfileInfoType) => {
         }
         </div>
       </div>
-
-
-
     </div>
   );
 };

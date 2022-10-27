@@ -95,7 +95,19 @@ export type FollowingInProgressAC = {
   userId: number
 }
 
-export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnFollowAC | SetUsersAC | SetCurrentPageAC | SetTotalUsersCountAC | ToggleIsFetchingAC | SetUserProfileAC | SetUserDataAC | FollowingInProgressAC
+export type SetStatusAC = {
+  type: 'SET_STATUS',
+  status: string
+}
+
+export type LoginUserAC = {
+  type: 'LOGIN_USER',
+  login: string,
+  password: string,
+  rememberMe: boolean
+}
+
+export type ActionsType =  AddPostAC | AddMessageAC | FollowAC | UnFollowAC | SetUsersAC | SetCurrentPageAC | SetTotalUsersCountAC | ToggleIsFetchingAC | SetUserProfileAC | SetUserDataAC | FollowingInProgressAC | SetStatusAC | LoginUserAC
 
 
 

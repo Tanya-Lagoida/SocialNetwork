@@ -4,17 +4,12 @@ import { Preloader } from '../../common/Preloader';
 import yes from '../../../images/yes.png';
 import no from '../../../images/no.png';
 import userPhoto from '../../../images/images.png';
-
-
-// export type ProfileType = {
-//   photos: {large: string}
-//   aboutMe: string
-//   fullName: string
-//   lookingForAJob: boolean
-// }
+import  ProfileStatus  from './ProfileStatus';
 
 type ProfileInfoType = {
   profile: any
+  status: string
+  updateStatusThunk: (status: string) => void
 }
 
 const ProfileInfo = (props: ProfileInfoType) => {
@@ -32,13 +27,15 @@ const ProfileInfo = (props: ProfileInfoType) => {
           <img className={s.avaImage} src={props.profile.photos.large != null ? props.profile.photos.large : userPhoto } alt="" />
         }
 
-        <div>{props.profile.aboutMe}</div>
+        {/*<div>{props.profile.aboutMe}</div>*/}
+        <ProfileStatus status={props.status} updateStatusThunk={props.updateStatusThunk}/>
         <div>{props.profile.fullName}</div>
         <div>lookingForAJob {(props.profile.lookingForAJob)
           ? <img className={s.yesNo} src={yes}/>
           : <img className={s.yesNo} src={no}/>
         }
         </div>
+
       </div>
     </div>
   );

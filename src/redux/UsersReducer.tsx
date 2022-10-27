@@ -7,8 +7,7 @@ import {
   UnFollowAC,
   ToggleIsFetchingAC, FollowingInProgressAC
 } from './state';
-import { getUsers, unFollow } from '../api/api';
-import { follow } from '../api/api';
+import { usersAPI } from '../api/api';
 
 export type UserType = {
   id: number
@@ -85,7 +84,7 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number): 
 export const getUsersThunk = (currentPage: number, pageSize: number) => {
   return (dispatch: any) => {
     dispatch(toggleIsFetching(true));
-    getUsers(currentPage, pageSize)
+    usersAPI.getUsers(currentPage, pageSize)
       .then((data: { items: UserType[]; totalCount: number; }) => {
         dispatch(toggleIsFetching(false));
         dispatch(setUsers(data.items));
@@ -97,7 +96,7 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => {
 export const onPageChangedThunk = (pageNumber: number, pageSize: number) => (dispatch: any) => {
   dispatch(setCurrentPage(pageNumber))
   dispatch(toggleIsFetching(true))
-  getUsers(pageNumber, pageSize)
+  usersAPI.getUsers(pageNumber, pageSize)
     .then((data: { items: UserType[]; }) => {
       dispatch(toggleIsFetching(false))
       dispatch(setUsers(data.items))
@@ -106,7 +105,7 @@ export const onPageChangedThunk = (pageNumber: number, pageSize: number) => (dis
 
 export const followThunk = (id: number) => (dispatch: any) => {
   dispatch(toggleFollowingInProgress(true, id))
-  follow(id)
+  usersAPI.follow(id)
     .then((response: { data: { resultCode: number; }; }) => {
       if (response.data.resultCode === 0) {
         dispatch(followSuccess(id))
@@ -117,7 +116,7 @@ export const followThunk = (id: number) => (dispatch: any) => {
 
 export const unFollowThunk = (id: number) => (dispatch: any) => {
   dispatch(toggleFollowingInProgress(true, id))
-  unFollow(id)
+  usersAPI.unFollow(id)
     .then(response => {
       if (response.data.resultCode === 0) {
         dispatch(unFollowSuccess(id))

@@ -1,5 +1,5 @@
 import { ActionsType, AuthType, SetUserDataAC } from './state';
-import { authUsers } from '../api/api';
+import { authAPI } from '../api/api';
 
 const initialState = {
   userId: null,
@@ -32,7 +32,7 @@ export const setUserData = (userId: number | null, email: string | null, login: 
 }
 
 export const authUsersThunk = () => (dispatch: any) => {
-  authUsers()
+  authAPI.authUsers()
     .then(response => {
       if (response.data.resultCode === 0) {
         const {id, email, login} = response.data.data;

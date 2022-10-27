@@ -1,5 +1,5 @@
-import { ActionsType, AddPostAC, PostType, SetUserProfileAC } from './state';
-import { setUserProfile } from '../api/api';
+import { ActionsType, AddPostAC, PostType, SetStatusAC, SetUserProfileAC } from './state';
+import { profileAPI } from '../api/api';
 
 const initialState = {
   posts: [
@@ -7,7 +7,8 @@ const initialState = {
     { id: 2, message: "It is me!", likesCount: 11 },
     { id: 3, message: "It is cool!", likesCount: 16 }
   ] as Array<PostType>,
-  profile: null
+  profile: null,
+  status: ""
 }
 
 export type InitialStateType = typeof initialState
@@ -30,6 +31,11 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
         ...state,
         profile: action.profile
       }
+    case 'SET_STATUS':
+      return {
+        ...state,
+        status: action.status
+      }
     default:
       return state;
   }
@@ -37,11 +43,26 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 
 export const addPostActionCreator = (NewPost: string): AddPostAC => ({ type: 'ADD-POST', NewPost })
 export const setUserProfileAC = (profile: any): SetUserProfileAC => ({ type: 'SET_USER_PROFILE', profile })
+export const setStatusAC = (status: string): SetStatusAC => ({ type: 'SET_STATUS', status })
 
 export const setUserProfileThunk = (userId: string) => (dispatch: any) => {
-  setUserProfile(userId)
+  profileAPI.setUserProfile(userId)
     .then(response => {
       dispatch(setUserProfileAC(response.data))
+    });
+}
+export const getUserStatusThunk = (userId: string) => (dispatch: any) => {
+  profileAPI.getStatus(userId)
+    .then(response => {
+      dispatch(setStatusAC(response.data))
+    });
+}
+export const updateStatusThunk = (status: string) => (dispatch: any) => {
+  profileAPI.updateStatus(status)
+    .then(response => {
+      if(response.data.resultCode === 0) {
+        dispatch(setStatusAC(status));
+      }
     });
 }
 

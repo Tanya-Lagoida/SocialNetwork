@@ -1,10 +1,16 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import {  setUserProfileThunk } from '../../redux/ProfileReducer';
+import {
+  getUserStatusThunk,
+  setUserProfileThunk,
+  updateStatusThunk
+} from '../../redux/ProfileReducer';
 import { AppStateType } from '../../redux/ReduxStore';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
+import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
+import { compose } from 'redux';
 
 type PathParamsType = {
   userId: string,
@@ -19,16 +25,17 @@ class ProfileContainer extends React.Component<RouteComponentProps<PathParamsTyp
       userId = '2';
     }
     this.props.setUserProfileThunk(userId)
+    this.props.getUserStatusThunk(userId)
   }
 
   render() {
-    if (!this.props.isAuth) return <Redirect to='/login' />
-
     return (
       <Profile
         {...this.props}
         profile={this.props.profile}
-        setUserProfileThunk={this.props.setUserProfileThunk}
+        status={this.props.status}
+        updateStatusThunk={this.props.updateStatusThunk}
+        // setUserProfileThunk={this.props.setUserProfileThunk}
       />
     );
   }
@@ -37,21 +44,25 @@ class ProfileContainer extends React.Component<RouteComponentProps<PathParamsTyp
 const MapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
+    status: state.profilePage.status
+
   };
 };
 
 type MapStatePropsType = {
-  profile: any
-  isAuth: boolean
+  profile: any,
+  status: string
 }
 
 type MapDispatchPropsType = {
-  setUserProfileThunk: (userId: string) => void
+  setUserProfileThunk: (userId: string) => void,
+  getUserStatusThunk: (userId: string) => void,
+  updateStatusThunk: (status: string) => void,
 }
-
 export type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
-const WithUrlDataContainerComponent = withRouter(ProfileContainer);
-
-export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(MapStateToProps, { setUserProfileThunk })(WithUrlDataContainerComponent);
+export default compose<React.ComponentType>(
+  connect(MapStateToProps, { setUserProfileThunk, getUserStatusThunk, updateStatusThunk }),
+  withRouter,
+  withAuthRedirect
+)(ProfileContainer)

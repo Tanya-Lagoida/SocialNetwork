@@ -48,11 +48,11 @@ export type AuthType = {
 
 export type AddPostAC = {
   type: 'ADD-POST',
-  NewPost: string
+  newPostText: string
 }
 export type AddMessageAC = {
   type: 'ADD-MESSAGE',
-  NewMessage: string
+  newMessageBody: string
 }
 export type FollowAC = {
   type: 'FOLLOW',
@@ -84,8 +84,8 @@ export type SetUserProfileAC = {
 }
 export type SetUserDataAC = {
   type: 'SET_USER_DATA',
-  data: {
-    userId: number | null, email: string | null, login: string | null
+  payload: {
+    userId: number | null, email: string | null, login: string | null, isAuth: boolean
   }
 }
 
@@ -102,7 +102,7 @@ export type SetStatusAC = {
 
 export type LoginUserAC = {
   type: 'LOGIN_USER',
-  login: string,
+  email: string,
   password: string,
   rememberMe: boolean
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import { connect } from 'react-redux';
-import { authUsersThunk, setUserData } from '../../redux/AuthReducer';
+import { authUsersThunk, logoutUserThunk, setUserData } from '../../redux/AuthReducer';
 import { AppStateType } from '../../redux/ReduxStore';
 
  class HeaderContainerComponent extends React.Component<AuthPropsType>{
@@ -14,6 +14,7 @@ import { AppStateType } from '../../redux/ReduxStore';
                    isAuth={this.props.isAuth}
                    login={this.props.login}
                    authUsersThunk={this.props.authUsersThunk}
+                   logoutUserThunk={this.props.logoutUserThunk}
     />
   }
 };
@@ -25,8 +26,9 @@ type MapStatePropsType = {
   login: string | null,
 }
 type MapDispatchPropsType = {
-  setUserData: (userId: number | null, email: string | null, login: string | null) => void
+  setUserData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => void
   authUsersThunk: () => void
+  logoutUserThunk: () => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
@@ -34,4 +36,4 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   login: state.auth.login,
 })
 
-export const HeaderContainer =  connect(mapStateToProps, {setUserData, authUsersThunk}) (HeaderContainerComponent);
+export const HeaderContainer =  connect(mapStateToProps, {setUserData, authUsersThunk, logoutUserThunk}) (HeaderContainerComponent);

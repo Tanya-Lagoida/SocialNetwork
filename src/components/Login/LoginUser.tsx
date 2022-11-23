@@ -1,35 +1,43 @@
 import React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { UserType } from '../../redux/UsersReducer';
+import { Input } from '../common/FormsControls/FormsControls';
+import { required } from '../../utils/validators/validators';
+import { loginUserThunk } from '../../redux/AuthReducer';
+import { Redirect } from 'react-router-dom';
 import { AppStateType } from '../../redux/ReduxStore';
-import { authAPI, profileAPI } from '../../api/api';
-import { setStatusAC } from '../../redux/ProfileReducer';
-import { AddPostAC, LoginUserAC } from '../../redux/state';
-import { log } from 'util';
+import style from './../common/FormsControls/FormsControls.module.css';
 
 type FormDataType = {
-  login: string
+  email: string
   password: string
   rememberMe: boolean
 }
 
 export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-
-
-
   return <form onSubmit={props.handleSubmit}>
     <div>
-      <Field component={'input'} name={'login'} placeholder={"Login"}/>
+      <Field component={Input} name={'email'}
+             placeholder={"email"}
+             validate={[required]}
+      />
     </div>
     <div>
-      <Field component={'input'} name={'password'} placeholder={"Password"}/>
+      <Field component={Input} name={'password'}
+             placeholder={"Password"}
+             validate={[required]}
+             type={'password'}
+      />
     </div>
     <div>
-      <Field component={'input'} name={'rememberMe'} type="checkbox"/> Remember me
+      <Field component={Input} name={'rememberMe'} type="checkbox"/> Remember me
     </div>
+    {
+      props.error && <div className={style.commonLoginError}>{props.error}</div>
+    }
+
     <div>
-      <button onClick={() => loginUserThunk}>Login</button>
+      <button>Login</button>
     </div>
   </form>
 };
@@ -38,10 +46,13 @@ const LoginReduxForm = reduxForm<FormDataType>({
   form: 'login'
 })(LoginForm)
 
-
-export const LoginUser = () => {
+export const LoginUser = (props: LoginUsersType) => {
   const onSubmit = (formData: FormDataType) => {
-    console.log(formData);
+    props.loginUserThunk(formData.email, formData.password, formData.rememberMe)
+  }
+
+  if (props.isAuth) {
+    return <Redirect to={'/profile'} />
   }
 
   return <div>
@@ -50,34 +61,19 @@ export const LoginUser = () => {
   </div>
 };
 
-export const loginUserAC = (login: string, password: string, rememberMe: boolean): LoginUserAC => ({ type: 'LOGIN_USER', login, password, rememberMe })
-
-export const loginUserThunk = (login: string, password: string, rememberMe: boolean) => (dispatch: any) => {
-  authAPI.loginUser( login, password, rememberMe )
-    .then(response => {
-      dispatch(loginUserAC( login, password, rememberMe ))
-      console.log(response.data)
-    });
-}
-
-type MapStatePropsType = {
-  login: string
-  password: string
-  rememberMe: boolean
-}
-
 type MapDispatchPropsType = {
-
+  loginUserThunk: (email: string, password: string, rememberMe: boolean) => void
 }
 
-export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
+type MapStateToPropsType = {
+  isAuth: boolean
+}
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-  login: state.form.login,
-  password: state.form,
-  rememberMe: state.form
-});
+type LoginUsersType = MapStateToPropsType & MapDispatchPropsType
+const MapStateToProps = (state: AppStateType): MapStateToPropsType => ({
+  isAuth: state.auth.isAuth
+})
 
-export default connect(mapStateToProps, { loginUserThunk })(LoginUser)
+export const LoginUserContainer = connect(MapStateToProps, {loginUserThunk} )(LoginUser)
 
 

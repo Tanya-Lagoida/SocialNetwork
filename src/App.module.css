@@ -21,3 +21,12 @@ textarea {
     font-size: 30px;
     font-weight: normal;
 }
+
+button {
+    width: 100px;
+    height: 25px;
+    background-color: plum;
+    border:none;
+    border-radius: 5px;
+
+}

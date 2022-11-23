@@ -48,13 +48,13 @@ export const Users = (props: UsersPropsType) => {
             ?
             <button
               disabled={props.followingInProgress.some(id => id === u.id)}
-              className={s.button}
+              // className={s.button}
               onClick={() => { props.unFollowThunk(u.id) }}>UNFOLLOW
             </button>
             :
             <button
               disabled={props.followingInProgress.some(id => id === u.id)}
-              className={s.button}
+              // className={s.button}
               onClick={() => { props.followThunk(u.id) }}>FOLLOW
             </button>
           }

@@ -1,11 +1,11 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { NavLink, Redirect, Route } from 'react-router-dom';
+import React, { useState } from 'react';
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
-import{ Message, MessagePropsType } from './Message/Message';
+import{ Message } from './Message/Message';
 import { DialogsPropsType } from './DialogsContainer';
+import AddMessageForm from './AddMessageForm';
 
-const Dialogs = (props: DialogsPropsType) => {
+export const Dialogs = (props: DialogsPropsType) => {
 
   let dialogsElements = props.dialogs.map((d: { name: string; id: number; avatar: string }) =>
     <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>);
@@ -14,21 +14,15 @@ const Dialogs = (props: DialogsPropsType) => {
 
 
   const [NewMessage, SetNewMessage] = useState('');
-  const onNewMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    SetNewMessage(e.currentTarget.value);
+
+  const addNewMessage = (values: any) => {
+    props.AddNewMessageContainer(values.newMessageBody)
+    // SetNewMessage('')
   };
 
-  const AddNewMessage = () => {
-    props.AddNewMessageContainer(NewMessage)
-    SetNewMessage('')
-  };
+  type FormDataTypeMessage = {
 
-  // const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-  //   if (e.code === 'Enter' && NewMessage.trim() !== '') {
-  //     props.AddNewMessageContainer(NewMessage);
-  //     SetNewMessage('');
-  //   }
-  // };
+  }
 
     return (
     <div className={s.allDialogs}>
@@ -38,19 +32,11 @@ const Dialogs = (props: DialogsPropsType) => {
       </div>
       <div className={s.messages}>
         {messagesElements}
-        <div>
-          <textarea
-            value={NewMessage}
-            // onKeyPress={onKeyPressHandler}
-            onChange={onNewMessageHandler} />
-        </div>
-
-        <div>
-          <button onClick={AddNewMessage}>Add message</button>
-        </div>
       </div>
-
+      <AddMessageForm onSubmit={addNewMessage}/>
     </div>
   );
 };
-export default Dialogs;
+
+
+

@@ -18,7 +18,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
     case  'ADD-POST':
       const newPost: PostType = {
         id: 5,
-        message: action.NewPost,
+        message: action.newPostText,
         likesCount: 0
       };
 
@@ -41,7 +41,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
   }
 };
 
-export const addPostActionCreator = (NewPost: string): AddPostAC => ({ type: 'ADD-POST', NewPost })
+export const addPostActionCreator = (newPostText: string): AddPostAC => ({ type: 'ADD-POST', newPostText })
 export const setUserProfileAC = (profile: any): SetUserProfileAC => ({ type: 'SET_USER_PROFILE', profile })
 export const setStatusAC = (status: string): SetStatusAC => ({ type: 'SET_STATUS', status })
 

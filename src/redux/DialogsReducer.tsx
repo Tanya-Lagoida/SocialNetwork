@@ -46,17 +46,17 @@ export const dialogsReducer = (state: InitialStateType  = initialState, action: 
     case 'ADD-MESSAGE':
       return {
         ...state,
-        messages: [...state.messages, { id: 4, message: action.NewMessage}]
+        messages: [...state.messages, { id: 4, message: action.newMessageBody}]
       };
     default:
       return state;
   }
 };
 
-export const addMessageActionCreator = (NewMessage: string): AddMessageAC => {
+export const addMessageActionCreator = (newMessageBody: string): AddMessageAC => {
   return {
     type: 'ADD-MESSAGE',
-    NewMessage: NewMessage
+    newMessageBody: newMessageBody
   }
 }
 

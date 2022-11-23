@@ -22,7 +22,8 @@ class ProfileContainer extends React.Component<RouteComponentProps<PathParamsTyp
 
     let userId = this.props.match.params.userId;
     if (!userId) {
-      userId = '2';
+      // @ts-ignore
+      userId = this.props.authorizedUserId;
     }
     this.props.setUserProfileThunk(userId)
     this.props.getUserStatusThunk(userId)
@@ -35,7 +36,6 @@ class ProfileContainer extends React.Component<RouteComponentProps<PathParamsTyp
         profile={this.props.profile}
         status={this.props.status}
         updateStatusThunk={this.props.updateStatusThunk}
-        // setUserProfileThunk={this.props.setUserProfileThunk}
       />
     );
   }
@@ -44,14 +44,17 @@ class ProfileContainer extends React.Component<RouteComponentProps<PathParamsTyp
 const MapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     profile: state.profilePage.profile,
-    status: state.profilePage.status
-
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.userId,
+    isAuth: state.auth.isAuth
   };
 };
 
 type MapStatePropsType = {
   profile: any,
-  status: string
+  status: string,
+  authorizedUserId: number | null,
+  isAuth: boolean
 }
 
 type MapDispatchPropsType = {

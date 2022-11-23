@@ -19,14 +19,14 @@
     grid-area: button;
     justify-self: center;
 }
-.button {
+/*.button {
     width: 87px;
     height: 110%;
     background-color: plum;
     border:none;
     border-radius: 5px;
 
-}
+}*/
 .nameAndLocation {
     border: 2px solid lightskyblue;
     border-radius: 20px;

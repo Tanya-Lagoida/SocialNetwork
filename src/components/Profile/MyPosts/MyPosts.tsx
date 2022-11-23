@@ -1,7 +1,10 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import React, { useState } from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import { MyPostsPropsType } from './MyPostsContainer';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { maxLengthCreator, required } from '../../../utils/validators/validators';
+import { Textarea } from '../../common/FormsControls/FormsControls';
 
 export const MyPosts = (props: MyPostsPropsType) => {
 
@@ -11,34 +14,17 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
   const [NewPost, setNewPost] = useState('');
 
-  const newPostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setNewPost(e.currentTarget.value);
-  };
-  const addNewPost = () => {
-    props.addPostAction(NewPost)
-    setNewPost('')
-  };
 
-  // const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-  //   if (e.code === 'Enter' && NewPost.trim() !== '') {
-  //     props.addPostAction(NewPost)
-  //     setNewPost('');
-  //   }
-  // };
+  const addNewPost = (values: any) => {
+    props.addPostAction(values.newPostText);
+    // setNewPost('');
+  };
 
   return (
     <div className={s.postsBlock}>
       <h3>My Posts</h3>
       <div>
-        <div>
-          <textarea
-            onChange={newPostHandler}
-            value={NewPost}
-          />
-        </div>
-        <div>
-          <button onClick={addNewPost}>Add post</button>
-        </div>
+        <AddPostFormRedux onSubmit={addNewPost} />
       </div>
       <div className={s.posts}>
         {postsElements}
@@ -46,4 +32,20 @@ export const MyPosts = (props: MyPostsPropsType) => {
     </div>
   );
 };
+
+const maxLength10 = maxLengthCreator(10)
+
+const AddPostForm: React.FC<InjectedFormProps> = (props) => {
+  return <form onSubmit={props.handleSubmit}>
+    <div>
+      <Field component={Textarea} name='newPostText' validate={[required, maxLength10]}/>
+    </div>
+    <div>
+      <button>Add post</button>
+    </div>
+  </form>;
+};
+
+const AddPostFormRedux = reduxForm({ form: 'postForm' })(AddPostForm);
+
 

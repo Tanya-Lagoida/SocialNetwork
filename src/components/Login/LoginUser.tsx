@@ -1,7 +1,7 @@
 import React from 'react';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { InjectedFormProps, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { Input } from '../common/FormsControls/FormsControls';
+import { createField, Input } from '../common/FormsControls/FormsControls';
 import { required } from '../../utils/validators/validators';
 import { loginUserThunk } from '../../redux/AuthReducer';
 import { Redirect } from 'react-router-dom';
@@ -12,53 +12,43 @@ type FormDataType = {
   email: string
   password: string
   rememberMe: boolean
+  captcha: string
 }
+
+type FormDataTypeKeys = Extract<keyof FormDataType, string>
 
 export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
   return <form onSubmit={props.handleSubmit}>
-    <div>
-      <Field component={Input} name={'email'}
-             placeholder={"email"}
-             validate={[required]}
-      />
-    </div>
-    <div>
-      <Field component={Input} name={'password'}
-             placeholder={"Password"}
-             validate={[required]}
-             type={'password'}
-      />
-    </div>
-    <div>
-      <Field component={Input} name={'rememberMe'} type="checkbox"/> Remember me
-    </div>
+    {createField<FormDataTypeKeys>('Email', 'email', [required], Input, {} )}
+    {createField<FormDataTypeKeys>('Password', 'password', [required], Input, {type:'password'} )}
+    {createField<FormDataTypeKeys>(undefined, 'rememberMe', [], Input, {type:'checkbox'}, 'Remember me' )}
+
     {
       props.error && <div className={style.commonLoginError}>{props.error}</div>
     }
-
     <div>
       <button>Login</button>
     </div>
-  </form>
+  </form>;
 };
 
 const LoginReduxForm = reduxForm<FormDataType>({
   form: 'login'
-})(LoginForm)
+})(LoginForm);
 
 export const LoginUser = (props: LoginUsersType) => {
   const onSubmit = (formData: FormDataType) => {
-    props.loginUserThunk(formData.email, formData.password, formData.rememberMe)
-  }
+    props.loginUserThunk(formData.email, formData.password, formData.rememberMe);
+  };
 
   if (props.isAuth) {
-    return <Redirect to={'/profile'} />
+    return <Redirect to={'/profile'}/>;
   }
 
   return <div>
     <h1>LOGIN</h1>
-    <LoginReduxForm onSubmit={onSubmit} />
-  </div>
+    <LoginReduxForm onSubmit={onSubmit}/>
+  </div>;
 };
 
 type MapDispatchPropsType = {
@@ -72,8 +62,8 @@ type MapStateToPropsType = {
 type LoginUsersType = MapStateToPropsType & MapDispatchPropsType
 const MapStateToProps = (state: AppStateType): MapStateToPropsType => ({
   isAuth: state.auth.isAuth
-})
+});
 
-export const LoginUserContainer = connect(MapStateToProps, {loginUserThunk} )(LoginUser)
+export const LoginUserContainer = connect(MapStateToProps, { loginUserThunk })(LoginUser);
 
 

@@ -1,13 +1,16 @@
 import {
   ActionsType,
   FollowAC,
+  FollowingInProgressAC,
   SetCurrentPageAC,
   SetTotalUsersCountAC,
   SetUsersAC,
-  UnFollowAC,
-  ToggleIsFetchingAC, FollowingInProgressAC
+  ToggleIsFetchingAC,
+  UnFollowAC
 } from './state';
-import { usersAPI } from '../api/api';
+import { ResultCodesEnum, UserResponseType, usersAPI } from '../api/api';
+import { ThunkAction } from 'redux-thunk';
+import { AppStateType } from './ReduxStore';
 
 export type UserType = {
   id: number
@@ -15,7 +18,7 @@ export type UserType = {
   followed: boolean
   name: string
   status: string
-  location: { country: string, city: string }
+  // location: { country: string, city: string }
 }
 
 const initialState = {
@@ -81,11 +84,13 @@ export const setTotalUsersCount = (totalUsersCount: number): SetTotalUsersCountA
 export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingAC => ({ type: 'TOGGLE_IS_FETCHING', isFetching })
 export const toggleFollowingInProgress = (isFetching: boolean, userId: number): FollowingInProgressAC => ({ type: 'FOLLOWING_IN_PROGRESS',isFetching, userId })
 
-export const getUsersThunk = (currentPage: number, pageSize: number) => {
-  return (dispatch: any) => {
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>
+
+export const getUsersThunk = (currentPage: number, pageSize: number): ThunkType => {
+  return (dispatch, getState) => {
     dispatch(toggleIsFetching(true));
     usersAPI.getUsers(currentPage, pageSize)
-      .then((data: { items: UserType[]; totalCount: number; }) => {
+      .then((data: UserResponseType) => {
         dispatch(toggleIsFetching(false));
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
@@ -93,7 +98,7 @@ export const getUsersThunk = (currentPage: number, pageSize: number) => {
   };
 }
 
-export const onPageChangedThunk = (pageNumber: number, pageSize: number) => (dispatch: any) => {
+export const onPageChangedThunk = (pageNumber: number, pageSize: number): ThunkType => (dispatch, getState) => {
   dispatch(setCurrentPage(pageNumber))
   dispatch(toggleIsFetching(true))
   usersAPI.getUsers(pageNumber, pageSize)
@@ -103,22 +108,22 @@ export const onPageChangedThunk = (pageNumber: number, pageSize: number) => (dis
     });
 }
 
-export const followThunk = (id: number) => (dispatch: any) => {
+export const followThunk = (id: number): ThunkType => (dispatch, getState) => {
   dispatch(toggleFollowingInProgress(true, id))
   usersAPI.follow(id)
     .then((response: { data: { resultCode: number; }; }) => {
-      if (response.data.resultCode === 0) {
+      if (response.data.resultCode === ResultCodesEnum.Success) {
         dispatch(followSuccess(id))
       }
       dispatch(toggleFollowingInProgress(false, id))
     })
 }
 
-export const unFollowThunk = (id: number) => (dispatch: any) => {
+export const unFollowThunk = (id: number): ThunkType => (dispatch, getState) => {
   dispatch(toggleFollowingInProgress(true, id))
   usersAPI.unFollow(id)
     .then(response => {
-      if (response.data.resultCode === 0) {
+      if (response.data.resultCode === ResultCodesEnum.Success) {
         dispatch(unFollowSuccess(id))
       }
      dispatch(toggleFollowingInProgress(false, id))

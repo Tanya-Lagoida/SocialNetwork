@@ -1,6 +1,9 @@
 import { ActionsType, AuthType, SetUserDataAC } from './state';
-import { authAPI } from '../api/api';
+import { authAPI, ResultCodesEnum } from '../api/api';
 import { stopSubmit } from 'redux-form';
+import { ThunkAction } from 'redux-thunk';
+import { AppStateType } from './ReduxStore';
+import { FormAction } from 'redux-form/lib/actions';
 
 const initialState = {
   userId: null,
@@ -31,20 +34,22 @@ export const setUserData = (userId: number | null, email: string | null, login: 
   };
 };
 
-export const authUsersThunk = () => (dispatch: any) => {
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsType | FormAction>
+
+export const authUsersThunk = (): ThunkType => (dispatch, getState) => {
   authAPI.authUsers()
     .then(response => {
-      if (response.data.resultCode === 0) {
+      if (response.data.resultCode === ResultCodesEnum.Success) {
         const { id, email, login } = response.data.data;
         dispatch(setUserData(id, email, login, true));
       }
     });
 };
 
-export const loginUserThunk = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+export const loginUserThunk = (email: string, password: string, rememberMe: boolean): ThunkType | FormAction => (dispatch, getState) => {
   authAPI.loginUser(email, password, rememberMe)
     .then(response => {
-      if (response.data.resultCode === 0) {
+      if (response.data.resultCode === ResultCodesEnum.Success) {
         dispatch(authUsersThunk());
       } else {
         let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
@@ -53,10 +58,10 @@ export const loginUserThunk = (email: string, password: string, rememberMe: bool
     });
 };
 
-export const logoutUserThunk = () => (dispatch: any) => {
+export const logoutUserThunk = (): ThunkType => (dispatch, getState) => {
   authAPI.logout()
     .then(response => {
-      if (response.data.resultCode === 0) {
+      if (response.data.resultCode === ResultCodesEnum.Success) {
         dispatch(setUserData(null, null, null, false));
       }
     });

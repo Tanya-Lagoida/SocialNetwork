@@ -1,5 +1,7 @@
 import { ActionsType, AddPostAC, PostType, SetStatusAC, SetUserProfileAC } from './state';
-import { profileAPI } from '../api/api';
+import { profileAPI, ResultCodesEnum } from '../api/api';
+import { ThunkAction } from 'redux-thunk';
+import { AppStateType } from './ReduxStore';
 
 const initialState = {
   posts: [
@@ -45,22 +47,24 @@ export const addPostActionCreator = (newPostText: string): AddPostAC => ({ type:
 export const setUserProfileAC = (profile: any): SetUserProfileAC => ({ type: 'SET_USER_PROFILE', profile })
 export const setStatusAC = (status: string): SetStatusAC => ({ type: 'SET_STATUS', status })
 
-export const setUserProfileThunk = (userId: string) => (dispatch: any) => {
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>
+
+export const setUserProfileThunk = (userId: string): ThunkType => (dispatch, getState) => {
   profileAPI.setUserProfile(userId)
     .then(response => {
       dispatch(setUserProfileAC(response.data))
     });
 }
-export const getUserStatusThunk = (userId: string) => (dispatch: any) => {
+export const getUserStatusThunk = (userId: string): ThunkType => (dispatch, getState) => {
   profileAPI.getStatus(userId)
     .then(response => {
       dispatch(setStatusAC(response.data))
     });
 }
-export const updateStatusThunk = (status: string) => (dispatch: any) => {
+export const updateStatusThunk = (status: string): ThunkType => (dispatch, getState) => {
   profileAPI.updateStatus(status)
     .then(response => {
-      if(response.data.resultCode === 0) {
+      if(response.data.resultCode === ResultCodesEnum.Success) {
         dispatch(setStatusAC(status));
       }
     });
